@@ -45,6 +45,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      const response = await api.get('/auth/me');
+      if (response.data.success) {
+        setUser(response.data.user);
+        setProfile(response.data.user);
+      }
+    } catch (error) {
+      console.error('Fetch user error:', error);
+    }
+  };
+
   const login = async (email, password) => {
     try {
       const response = await api.post('/auth/login', { email, password });
@@ -116,6 +128,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
     fetchUnreadCount,
+    fetchUser,
   };
 
   return (

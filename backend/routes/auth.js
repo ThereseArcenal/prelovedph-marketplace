@@ -3,6 +3,7 @@ const router = express.Router();
 const { supabase } = require('../config/supabase');
 const { auth } = require('../middleware/auth');
 const { body, validationResult } = require('express-validator');
+const { upload, uploadToSupabase } = require('../middleware/upload');
 
 // Validation rules
 const registerValidation = [
@@ -214,6 +215,51 @@ router.put('/profile', auth, async (req, res) => {
     res.status(500).json({ 
       success: false,
       message: 'Failed to update profile' 
+    });
+  }
+});
+
+/**
+ * @route POST /api/auth/upload-avatar
+ * @desc Upload user avatar
+ * @access Private
+ */
+router.post('/upload-avatar', auth, upload.single('avatar'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No image file provided'
+      });
+    }
+
+    // Upload to local storage
+    const imageUrl = await uploadToSupabase(req.file, req.user.id, 'local');
+
+    // Update profile with new avatar URL
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({
+        avatar_url: imageUrl,
+        updated_at: new Date()
+      })
+      .eq('id', req.user.id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    res.json({
+      success: true,
+      message: 'Avatar uploaded successfully',
+      avatar_url: imageUrl,
+      profile: data
+    });
+  } catch (error) {
+    console.error('Avatar upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to upload avatar'
     });
   }
 });
