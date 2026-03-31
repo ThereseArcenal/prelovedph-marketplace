@@ -17,7 +17,7 @@ CREATE TABLE profiles (
   location TEXT,
   avatar_url TEXT DEFAULT 'https://via.placeholder.com/150',
   bio TEXT,
-  role TEXT DEFAULT 'user' CHECK (role IN ('user', 'admin', 'moderator')),
+  role TEXT DEFAULT 'buyer' CHECK (role IN ('user', 'admin', 'moderator', 'buyer', 'seller')),
   rating DECIMAL(3,2) DEFAULT 0,
   total_sales INT DEFAULT 0,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -164,11 +164,12 @@ CREATE POLICY "Users can remove favorites"
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, name, email, avatar_url)
+  INSERT INTO public.profiles (id, name, email, role, avatar_url)
   VALUES (
     NEW.id,
     COALESCE(NEW.raw_user_meta_data->>'name', split_part(NEW.email, '@', 1)),
     NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'role', 'buyer'),
     COALESCE(NEW.raw_user_meta_data->>'avatar_url', 'https://via.placeholder.com/150')
   );
   RETURN NEW;

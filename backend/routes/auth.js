@@ -8,7 +8,8 @@ const { body, validationResult } = require('express-validator');
 const registerValidation = [
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
-  body('name').notEmpty().trim().escape()
+  body('name').notEmpty().trim().escape(),
+  body('role').isIn(['seller', 'buyer']).trim().toLowerCase()
 ];
 
 const loginValidation = [
@@ -32,25 +33,44 @@ router.post('/register', registerValidation, async (req, res) => {
   }
 
   try {
-    const { email, password, name } = req.body;
+    const { email, password, name, role } = req.body;
+
+    // Validate role
+    if (!role || !['seller', 'buyer'].includes(role.toLowerCase())) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role. Must be either seller or buyer'
+      });
+    }
 
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        data: { name }
+        data: { name, role: role.toLowerCase() }
       }
     });
 
     if (error) {
       if (error.message.includes('already registered')) {
-        return res.status(400).json({ 
+        return res.status(400).json({
           success: false,
-          message: 'Email already registered' 
+          message: 'Email already registered'
         });
       }
       throw error;
     }
+
+    // Create profile with role
+    await supabase
+      .from('profiles')
+      .insert({
+        id: data.user.id,
+        name: name,
+        email: email,
+        role: role.toLowerCase(),
+        created_at: new Date()
+      });
 
     res.status(201).json({
       success: true,
@@ -58,7 +78,8 @@ router.post('/register', registerValidation, async (req, res) => {
       user: {
         id: data.user.id,
         email: data.user.email,
-        name: data.user.user_metadata?.name
+        name: data.user.user_metadata?.name,
+        role: data.user.user_metadata?.role
       }
     });
   } catch (error) {

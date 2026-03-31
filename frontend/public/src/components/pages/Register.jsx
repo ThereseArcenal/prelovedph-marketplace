@@ -10,6 +10,7 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'buyer', // default role
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -24,40 +25,44 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
-    
+
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid';
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
-    
+
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match';
     }
-    
+
+    if (!formData.role) {
+      newErrors.role = 'Please select a role';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
-    const result = await register(formData.name, formData.email, formData.password);
+    const result = await register(formData.name, formData.email, formData.password, formData.role);
     setLoading(false);
-    
+
     if (result.success) {
       navigate('/login');
     }
@@ -116,8 +121,8 @@ const Register = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className={`block w-full px-4 py-3 border rounded-xl 
-                         placeholder-gray-400 focus:outline-none focus:ring-2 
+                className={`block w-full px-4 py-3 border rounded-xl
+                         placeholder-gray-400 focus:outline-none focus:ring-2
                          focus:ring-green-500 focus:border-transparent
                          ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                 placeholder="you@example.com"
@@ -126,7 +131,54 @@ const Register = () => {
                 <p className="mt-1 text-xs text-red-500">{errors.email}</p>
               )}
             </div>
-            
+
+            {/* Role Selection */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                I am a...
+              </label>
+              <div className="space-y-2">
+                <div className="flex items-center p-4 border-2 rounded-xl cursor-pointer transition"
+                     style={{borderColor: formData.role === 'buyer' ? 'rgb(22, 163, 74)' : 'rgb(209, 213, 219)'}}
+                     onClick={() => setFormData({ ...formData, role: 'buyer' })}>
+                  <input
+                    type="radio"
+                    id="buyer"
+                    name="role"
+                    value="buyer"
+                    checked={formData.role === 'buyer'}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-green-600 cursor-pointer"
+                  />
+                  <label htmlFor="buyer" className="ml-3 flex-1 cursor-pointer">
+                    <span className="font-medium text-gray-900">Buyer</span>
+                    <p className="text-xs text-gray-500">Browse and purchase preloved items</p>
+                  </label>
+                </div>
+
+                <div className="flex items-center p-4 border-2 rounded-xl cursor-pointer transition"
+                     style={{borderColor: formData.role === 'seller' ? 'rgb(22, 163, 74)' : 'rgb(209, 213, 219)'}}
+                     onClick={() => setFormData({ ...formData, role: 'seller' })}>
+                  <input
+                    type="radio"
+                    id="seller"
+                    name="role"
+                    value="seller"
+                    checked={formData.role === 'seller'}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-green-600 cursor-pointer"
+                  />
+                  <label htmlFor="seller" className="ml-3 flex-1 cursor-pointer">
+                    <span className="font-medium text-gray-900">Seller</span>
+                    <p className="text-xs text-gray-500">List and sell your preloved items</p>
+                  </label>
+                </div>
+              </div>
+              {errors.role && (
+                <p className="mt-2 text-xs text-red-500">{errors.role}</p>
+              )}
+            </div>
+
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">

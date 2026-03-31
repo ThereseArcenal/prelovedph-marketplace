@@ -63,9 +63,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, role) => {
     try {
-      const response = await api.post('/auth/register', { name, email, password });
+      const response = await api.post('/auth/register', { name, email, password, role });
       if (response.data.success) {
         toast.success('Registration successful! Please check your email to verify your account.');
         return { success: true };
