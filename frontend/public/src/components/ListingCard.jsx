@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiHeart, FiMapPin, FiClock, FiShare2 } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
-import api from '../../utils/api';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 
 const ListingCard = ({ listing }) => {
