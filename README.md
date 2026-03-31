@@ -154,6 +154,7 @@ Frontend:
   "react-icons": "^4.11.0"
 }
 
+
 🗄️ Database Schema Overview
 The PrelovedPH platform uses the following main tables:
 
@@ -198,6 +199,8 @@ Preview Production Build
 bash
 cd frontend
 npm run preview
+
+
 🛠️ Technologies Used
 This project is built with:
 
@@ -212,6 +215,8 @@ Database	Supabase (PostgreSQL)
 Authentication	Supabase Auth
 Storage	Supabase Storage
 File Upload	Multer
+
+
 🎯 Features
 For Buyers
 ✅ Browse verified listings with real-time updates
@@ -244,6 +249,7 @@ General Features
 
 ✅ Clean, minimalist UI
 
+
 🔒 Security Features
 Feature	Description
 Row Level Security (RLS)	Database-level access control
@@ -252,6 +258,8 @@ Role-based Access	User and Admin roles
 File Validation	Image type and size restrictions
 API Rate Limiting	Prevents abuse
 CORS Protection	Restricted API access
+
+
 📁 Project Structure
 text
 prelovedph-marketplace/
@@ -308,6 +316,8 @@ prelovedph-marketplace/
 │   └── vite.config.js
 │
 └── README.md
+
+
 🎨 Pages Overview
 Page	Route	Description
 Home	/	Landing page with featured items
@@ -319,6 +329,8 @@ Profile	/profile	User profile settings
 About	/about	About PrelovedPH
 Login	/login	Sign in to account
 Register	/register	Create new account
+
+
 🔧 Available Scripts
 Backend
 Command	Description
@@ -329,6 +341,8 @@ Command	Description
 npm run dev	Start development server
 npm run build	Build for production
 npm run preview	Preview production build
+
+
 🚀 Deployment
 Deploy to Vercel (Frontend)
 Push your code to GitHub
@@ -366,6 +380,7 @@ Add environment variables
 
 Click "Deploy"
 
+
 🤝 Contributing
 Fork the repository
 
@@ -376,6 +391,7 @@ Make your changes and commit: git commit -m 'Add your feature'
 Push to the branch: git push origin feature/your-feature
 
 Submit a pull request
+
 
 📧 Support
 If you encounter any issues:
@@ -388,6 +404,7 @@ Ensure your Supabase project is properly configured
 
 Check that the database schema was applied successfully
 
+
 🔗 Important Links
 Resource	Link
 Supabase	https://supabase.com
@@ -395,6 +412,8 @@ React	https://react.dev
 Vite	https://vitejs.dev
 Tailwind CSS	https://tailwindcss.com
 Node.js	https://nodejs.org
+
+
 📝 License
 This project is part of a capstone project and is for educational purposes.
 
