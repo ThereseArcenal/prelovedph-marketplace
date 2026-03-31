@@ -10,7 +10,7 @@ const registerValidation = [
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 6 }),
   body('name').notEmpty().trim().escape(),
-  body('role').isIn(['seller', 'buyer']).trim().toLowerCase()
+  body('role').toLowerCase().trim().isIn(['seller', 'buyer'])
 ];
 
 const loginValidation = [

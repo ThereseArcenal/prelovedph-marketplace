@@ -52,14 +52,16 @@ const Navbar = () => {
 
             {user ? (
               <div className="relative flex items-center space-x-4 border-l border-slate-200 pl-8">
-                {/* Sell Item Button */}
-                <Link
-                  to="/create-listing"
-                  className="btn-primary-sm flex items-center space-x-1"
-                >
-                  <FiPlusCircle size={18} />
-                  <span>Sell Item</span>
-                </Link>
+                {/* Sell Item Button - Only for sellers */}
+                {profile?.role === 'seller' && (
+                  <Link
+                    to="/create-listing"
+                    className="btn-primary-sm flex items-center space-x-1"
+                  >
+                    <FiPlusCircle size={18} />
+                    <span>Sell Item</span>
+                  </Link>
+                )}
 
                 {/* Messages Icon */}
                 <Link to="/messages" className="relative text-slate-600 hover:text-emerald-600 transition-colors">
@@ -94,14 +96,17 @@ const Navbar = () => {
                       <FiUser size={18} />
                       <span>My Profile</span>
                     </Link>
-                    <Link
-                      to="/my-listings"
-                      className="flex items-center space-x-2 px-4 py-3 text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      <FiShoppingBag size={18} />
-                      <span>My Listings</span>
-                    </Link>
+                    {/* My Listings - Only for sellers */}
+                    {profile?.role === 'seller' && (
+                      <Link
+                        to="/my-listings"
+                        className="flex items-center space-x-2 px-4 py-3 text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        <FiShoppingBag size={18} />
+                        <span>My Listings</span>
+                      </Link>
+                    )}
                     <Link
                       to="/favorites"
                       className="flex items-center space-x-2 px-4 py-3 text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
@@ -173,14 +178,17 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <Link
-                  to="/create-listing"
-                  className="flex items-center space-x-2 py-3 text-emerald-600 hover:bg-emerald-50 px-3 rounded-lg transition-colors font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <FiPlusCircle size={18} />
-                  <span>Sell Item</span>
-                </Link>
+                {/* Sell Item - Only for sellers */}
+                {profile?.role === 'seller' && (
+                  <Link
+                    to="/create-listing"
+                    className="flex items-center space-x-2 py-3 text-emerald-600 hover:bg-emerald-50 px-3 rounded-lg transition-colors font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <FiPlusCircle size={18} />
+                    <span>Sell Item</span>
+                  </Link>
+                )}
                 <Link
                   to="/profile"
                   className="flex items-center space-x-2 py-3 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 px-3 rounded-lg transition-colors font-medium"
@@ -189,14 +197,17 @@ const Navbar = () => {
                   <FiUser size={18} />
                   <span>Profile</span>
                 </Link>
-                <Link
-                  to="/my-listings"
-                  className="flex items-center space-x-2 py-3 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 px-3 rounded-lg transition-colors font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <FiShoppingBag size={18} />
-                  <span>My Listings</span>
-                </Link>
+                {/* My Listings - Only for sellers */}
+                {profile?.role === 'seller' && (
+                  <Link
+                    to="/my-listings"
+                    className="flex items-center space-x-2 py-3 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 px-3 rounded-lg transition-colors font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <FiShoppingBag size={18} />
+                    <span>My Listings</span>
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="flex items-center space-x-2 w-full py-3 text-red-600 hover:bg-red-50 px-3 rounded-lg transition-colors font-medium"

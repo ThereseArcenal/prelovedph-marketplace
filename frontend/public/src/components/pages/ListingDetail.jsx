@@ -77,19 +77,24 @@ const ListingDetail = () => {
       navigate('/login');
       return;
     }
-    
+
     if (!message.trim()) {
       toast.error('Please enter a message');
       return;
     }
-    
+
     try {
       await api.post('/messages', {
         listing_id: listing.id,
         message: message,
       });
-      toast.success('Message sent! The seller will contact you.');
+      toast.success('Message sent! Redirecting to chat...');
       setMessage('');
+
+      // Navigate to messages page
+      setTimeout(() => {
+        navigate('/messages');
+      }, 800);
     } catch (error) {
       toast.error('Failed to send message');
     }

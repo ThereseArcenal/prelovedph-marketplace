@@ -12,6 +12,7 @@ const Listings = lazy(() => import('./components/pages/Listings'));
 const ListingDetail = lazy(() => import('./components/pages/ListingDetail'));
 const CreateListing = lazy(() => import('./components/pages/CreateListing'));
 const MyListings = lazy(() => import('./components/pages/MyListings'));
+const Messages = lazy(() => import('./components/pages/Messages'));
 const Profile = lazy(() => import('./components/pages/Profile'));
 const About = lazy(() => import('./components/pages/About'));
 const Login = lazy(() => import('./components/pages/Login'));
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/listing/:id" element={<ListingDetail />} />
                 <Route path="/create-listing" element={<CreateListing />} />
                 <Route path="/my-listings" element={<MyListings />} />
+                <Route path="/messages" element={<Messages />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../utils/api';
 import toast from 'react-hot-toast';
 import { FiEdit2, FiTrash2, FiCheckCircle, FiXCircle, FiEye } from 'react-icons/fi';
 
 const MyListings = () => {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, profile } = useAuth();
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('active');
@@ -80,6 +81,26 @@ const MyListings = () => {
       <div className="text-center py-12">
         <p className="text-gray-500">Please login to view your listings</p>
         <Link to="/login" className="btn-primary inline-block mt-4">Login</Link>
+      </div>
+    );
+  }
+
+  if (profile?.role === 'buyer') {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <div className="text-6xl mb-4">🔒</div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Sellers Only</h1>
+          <p className="text-gray-600 mb-6">
+            Only sellers can manage listings. To sell items, please switch to a seller account.
+          </p>
+          <button
+            onClick={() => navigate('/')}
+            className="btn-primary"
+          >
+            Back to Home
+          </button>
+        </div>
       </div>
     );
   }
