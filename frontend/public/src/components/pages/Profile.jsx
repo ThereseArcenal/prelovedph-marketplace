@@ -3,6 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../utils/api';
 import { FiUser, FiPhone, FiMapPin, FiMail, FiEdit2, FiShoppingBag, FiHeart, FiSave, FiX } from 'react-icons/fi';
+import ChangePassword from './ChangePassword';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
@@ -365,6 +366,21 @@ const Profile = () => {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Security Section */}
+      <div className="mt-8">
+        <ChangePassword />
+      </div>
+
+      {/* Logout Button */}
+      <div className="mt-8 text-center pb-8">
+        <button
+          onClick={handleLogout}
+          className="px-6 py-2 border border-red-300 text-red-600 hover:bg-red-50 rounded-lg transition font-medium"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

@@ -17,6 +17,8 @@ const Profile = lazy(() => import('./components/pages/Profile'));
 const About = lazy(() => import('./components/pages/About'));
 const Login = lazy(() => import('./components/pages/Login'));
 const Register = lazy(() => import('./components/pages/Register'));
+const ForgotPassword = lazy(() => import('./components/pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./components/pages/ResetPassword'));
 
 // Loading fallback
 const PageLoader = () => (
@@ -44,6 +46,8 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
               </Routes>
             </Suspense>
           </main>

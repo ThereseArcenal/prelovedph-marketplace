@@ -118,6 +118,40 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      const response = await api.post('/auth/forgot-password', { email });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.message };
+    }
+  };
+
+  const resetPassword = async (email, newPassword, token) => {
+    try {
+      const response = await api.post('/auth/reset-password', {
+        email,
+        newPassword,
+        token
+      });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.message };
+    }
+  };
+
+  const changePassword = async (currentPassword, newPassword) => {
+    try {
+      const response = await api.post('/auth/change-password', {
+        currentPassword,
+        newPassword
+      });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      return { success: false, error: error.response?.data?.message };
+    }
+  };
+
   const value = {
     user,
     profile,
@@ -127,6 +161,9 @@ export const AuthProvider = ({ children }) => {
     register,
     logout,
     updateProfile,
+    forgotPassword,
+    resetPassword,
+    changePassword,
     fetchUnreadCount,
     fetchUser,
   };
